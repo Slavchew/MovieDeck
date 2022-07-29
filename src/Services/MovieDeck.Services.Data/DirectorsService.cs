@@ -8,22 +8,28 @@
     using MovieDeck.Common;
     using MovieDeck.Data.Common.Repositories;
     using MovieDeck.Data.Models;
+    using MovieDeck.Services.Mapping;
+    using MovieDeck.Services.TmdbApi;
     using MovieDeck.Web.ViewModels.Directors;
+    using MovieDeck.Web.ViewModels.Images;
 
     public class DirectorsService : IDirectorsService
     {
         private readonly IDeletableEntityRepository<Director> directorsRepository;
         private readonly IRepository<MovieDirector> movieDirectorRepository;
         private readonly IImagesService imagesService;
+        private readonly ITmdbService tmdbService;
 
         public DirectorsService(
             IDeletableEntityRepository<Director> directorsRepository,
             IRepository<MovieDirector> movieDirectorRepository,
-            IImagesService imagesService)
+            IImagesService imagesService,
+            ITmdbService tmdbService)
         {
             this.directorsRepository = directorsRepository;
             this.movieDirectorRepository = movieDirectorRepository;
             this.imagesService = imagesService;
+            this.tmdbService = tmdbService;
         }
 
         public async Task CreateAsync(CreateDirectorInputModel input, string userId, string imagePath)
@@ -34,8 +40,6 @@
                 Biography = input.Biography,
                 BirthDate = input.BirthDate,
             };
-
-
 
             Directory.CreateDirectory($"{imagePath}/{GlobalConstants.DirectorsImagesFolder}/");
 
@@ -48,7 +52,7 @@
             await this.directorsRepository.SaveChangesAsync();
         }
 
-        public Director GetById(int id)
+        public Director GetDirectorEntityById(int id)
         {
             return this.directorsRepository.All().FirstOrDefault(x => x.Id == id);
         }
@@ -74,6 +78,38 @@
             }
 
             await this.movieDirectorRepository.SaveChangesAsync();
+        }
+
+        public T GetById<T>(int id)
+        {
+            return this.directorsRepository.All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+        }
+
+        public List<DirectorImageViewModel> GetDirectorPhotosForSingleDirectorPage(int originalId)
+        {
+            if (originalId == 0)
+            {
+                return new List<DirectorImageViewModel>();
+            }
+
+            var personImagesDtos = this.tmdbService.GetPersonImages(originalId);
+
+            var directorImages = new List<DirectorImageViewModel>();
+
+            foreach (var imageDto in personImagesDtos)
+            {
+                var directorImage = new DirectorImageViewModel
+                {
+                    PhotoUrl = string.Format(GlobalConstants.RemoteImagesUrl, imageDto.PhotoPath),
+                };
+
+                directorImages.Add(directorImage);
+            }
+
+            return directorImages;
         }
     }
 }

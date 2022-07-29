@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using MovieDeck.Services.Data;
+using MovieDeck.Web.ViewModels.Actors;
     using MovieDeck.Web.ViewModels.Directors;
 
     public class DirectorsController : BaseController
@@ -44,6 +45,19 @@
             await this.directorsService.CreateAsync(input, userId, $"{this.environment.WebRootPath}/images");
 
             return this.Redirect("/");
+        }
+
+        [Route("[controller]/{id:int}")]
+        public IActionResult ById(int id)
+        {
+            var model = this.directorsService.GetById<SingleDirectorViewModel>(id);
+            if (model == null)
+            {
+                return this.NotFound();
+            }
+
+            model.Images = this.directorsService.GetDirectorPhotosForSingleDirectorPage(model.OriginalId);
+            return this.View(model);
         }
     }
 }

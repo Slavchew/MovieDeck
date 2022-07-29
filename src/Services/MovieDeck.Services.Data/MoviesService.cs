@@ -98,7 +98,7 @@
 
             foreach (var actorInput in input.Actors)
             {
-                var actor = this.actorsService.GetActorById(actorInput.ActorId);
+                var actor = this.actorsService.GetActorEntityById(actorInput.ActorId);
                 if (actor == null)
                 {
                     continue;
@@ -118,7 +118,7 @@
 
             foreach (var directorId in input.DirectorsIds)
             {
-                var director = this.directorsService.GetById(directorId);
+                var director = this.directorsService.GetDirectorEntityById(directorId);
                 if (director == null)
                 {
                     continue;
@@ -183,7 +183,7 @@
             {
                 foreach (var actorInput in input.Actors)
                 {
-                    var actor = this.actorsService.GetActorById(actorInput.ActorId);
+                    var actor = this.actorsService.GetActorEntityById(actorInput.ActorId);
                     if (actor == null)
                     {
                         continue;
@@ -210,7 +210,7 @@
             {
                 foreach (var directorId in input.DirectorsIds)
                 {
-                    var director = this.directorsService.GetById(directorId);
+                    var director = this.directorsService.GetDirectorEntityById(directorId);
                     if (director == null)
                     {
                         continue;

@@ -131,8 +131,7 @@
                                                 {
                                                     <div class="cast-it">
                                                         <div class="cast-left">
-                                                            <img class="lazyload" data-src="@actor.PhotoUrl" alt="@actor.ActorFullName" style="width: 80px;">
-                                                            <a asp-controller="Actors" asp-action="ById" asp-route-id="@actor.ActorId">@actor.ActorFullName</a>
+                                                            <a asp-controller="Actors" asp-action="ById" asp-route-id="@actor.ActorId"><img class="lazyload" data-src="@actor.PhotoUrl" alt="@actor.ActorFullName" style="width: 80px;">@actor.ActorFullName</a>
                                                         </div>
                                                         <p>@actor.CharacterName</p>
                                                     </div>
@@ -169,7 +168,7 @@
                                                 <p>
                                                     @foreach (var director in Model.Directors.Take(3))
                                                     {
-                                                        <a href="#">@director.DirectorFullName ,</a>
+                                                        <a asp-controller="Directors" asp-action="ById" asp-route-id="@director.DirectorId">@director.DirectorFullName ,</a>
                                                     }
                                                 </p>
                                             </div>
@@ -399,8 +398,7 @@
                                             {
                                                 <div class="cast-it">
                                                     <div class="cast-left">
-                                                        <img class="lazyload" data-src="@director.PhotoUrl" alt="@director.DirectorFullName" style="width: 80px;">
-                                                        <a href="#">@director.DirectorFullName</a>
+                                                        <a asp-controller="Directors" asp-action="ById" asp-route-id="@director.DirectorId"><img class="lazyload" data-src="@director.PhotoUrl" alt="@director.DirectorFullName" style="width: 80px;">@director.DirectorFullName</a>
                                                     </div>
                                                     <p>Director</p>
                                                 </div>
@@ -414,8 +412,7 @@
                                             {
                                                 <div class="cast-it">
                                                     <div class="cast-left">
-                                                        <img class="lazyload" data-src="@actor.PhotoUrl" alt="@actor.ActorFullName" style="width: 80px;">
-                                                        <a asp-controller="Actors" asp-action="ById" asp-route-id="@actor.ActorId">@actor.ActorFullName</a>
+                                                        <a asp-controller="Actors" asp-action="ById" asp-route-id="@actor.ActorId"><img class="lazyload" data-src="@actor.PhotoUrl" alt="@actor.ActorFullName" style="width: 80px;">@actor.ActorFullName</a>
                                                     </div>
                                                     <p>@actor.CharacterName</p>
                                                 </div>

@@ -6,17 +6,8 @@
     using MovieDeck.Data.Models;
     using MovieDeck.Services.Mapping;
 
-    public class ActorImageViewModel : IMapFrom<Image>, IHaveCustomMappings
+    public class ActorImageViewModel
     {
         public string PhotoUrl { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Image, ActorImageViewModel>()
-                .ForMember(x => x.PhotoUrl, opt =>
-                    opt.MapFrom(x => x.RemoteImageUrl != null ?
-                        string.Format(GlobalConstants.RemoteImagesUrl, x.RemoteImageUrl) :
-                       $"/images/{GlobalConstants.ActorsImagesFolder}/{x.Id}.{x.Extension}"));
-        }
     }
 }

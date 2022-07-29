@@ -1,6 +1,6 @@
 ﻿namespace MovieDeck.Services.Models
 {
-    public class ActorImageDto
+    public class PersonImageDto
     {
         public string PhotoPath { get; set; }
     }

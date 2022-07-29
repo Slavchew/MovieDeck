@@ -21,7 +21,7 @@
 
         List<MovieVideoDto> GetMovieVideos(int originaId);
 
-        List<ActorImageDto> GetActorImages(int originalId);
+        List<PersonImageDto> GetPersonImages(int originalId);
 
         // void GetMoviesInRange(int start, int end);
     }

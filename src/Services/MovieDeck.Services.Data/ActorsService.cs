@@ -91,11 +91,11 @@
                 return new List<ActorImageViewModel>();
             }
 
-            var actorImagesDtos = this.tmdbService.GetActorImages(originalId);
+            var personImagesDtos = this.tmdbService.GetPersonImages(originalId);
 
             var actorImages = new List<ActorImageViewModel>();
 
-            foreach (var imageDto in actorImagesDtos)
+            foreach (var imageDto in personImagesDtos)
             {
                 var actorImage = new ActorImageViewModel
                 {
@@ -108,7 +108,7 @@
             return actorImages;
         }
 
-        public Actor GetActorById(int id)
+        public Actor GetActorEntityById(int id)
         {
             return this.actorsRepository.All().FirstOrDefault(x => x.Id == id);
         }

@@ -2851,7 +2851,6 @@ ul {
 }
 .movie-single .movie-single-ct .mvcast-item .cast-it a {
   color: #4280bf;
-  margin-right: 100px;
 }
 @media (max-width: 767px) {
   .movie-single .movie-single-ct .mvcast-item .cast-it a {

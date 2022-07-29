@@ -8,6 +8,8 @@
 
     public class DirectorViewModel : IMapFrom<MovieDirector>, IHaveCustomMappings
     {
+        public int DirectorId { get; set; }
+
         public string DirectorFullName { get; set; }
 
         public string DirectorPhotoPath { get; set; }

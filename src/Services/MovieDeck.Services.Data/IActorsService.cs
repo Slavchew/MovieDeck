@@ -11,7 +11,7 @@
     {
         T GetById<T>(int id);
 
-        Actor GetActorById(int id);
+        Actor GetActorEntityById(int id);
 
         Task CreateAsync(CreateActorInputModel input, string userId, string imagePath);
 
