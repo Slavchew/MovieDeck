@@ -3714,7 +3714,8 @@ p.ceb-single {
 .sliderv2 .movie-item .title-in .redbtn:hover {
   color: #ffffff;
 }
-.sliderv2 .movie-item .title-in .btn-transform:hover .hvrbtn {
+
+.btn-transform:hover .hvrbtn {
   background-color: #020d18;
   color: #dcf836;
 }

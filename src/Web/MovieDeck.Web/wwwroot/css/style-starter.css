@@ -850,6 +850,7 @@ header.nav-fixed {
         -o-border-radius: 6px;
         -ms-border-radius: 6px;
         -moz-border-radius: 6px;
+        filter: brightness(65%);
     }
 
         .w3l-main-slider .banner-view::before {
@@ -885,15 +886,35 @@ header.nav-fixed {
 
     .w3l-main-slider .banner-info {
         position: absolute;
-        bottom: 0;
-        max-width: 500px;
-        padding: 0 60px;
+        top: 25%;
+        left: 3%;
+        
+        max-width: 60%;
     }
 
+        .w3l-main-slider .banner-info .movie-genres-container {
+            display: flex;
+            flex-direction: row;
+            gap: 7px;
+            margin-bottom: 10px;
+        }
+
+            .w3l-main-slider .banner-info .movie-genres-container .movie-genre {
+                font-weight: 700;
+                color: #fff;
+                border-radius: 4px;
+                font-size: 1.5vmin;
+                padding: 3px 6px;
+            }
+
         .w3l-main-slider .banner-info h3 {
-            font-size: 30px;
+            font-size: 3.2vw;
             font-weight: 700;
             color: #fff;
+        }
+
+        .w3l-main-slider .banner-info .movie-short-info {
+            color: #cdcdcd;
         }
 
         .w3l-main-slider .banner-info p {
