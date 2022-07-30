@@ -8,7 +8,7 @@
     using MovieDeck.Data.Models;
     using MovieDeck.Services.Mapping;
 
-    public class MoviesInListViewModel : IMapFrom<Movie>, IHaveCustomMappings
+    public class MovieInListViewModel : IMapFrom<Movie>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -20,7 +20,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Movie, MoviesInListViewModel>()
+            configuration.CreateMap<Movie, MovieInListViewModel>()
                 .ForMember(x => x.PosterUrl, opt =>
                     opt.MapFrom(x => x.PosterPath.Contains("-") ?
                         $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.PosterPath :

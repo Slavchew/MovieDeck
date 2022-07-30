@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public class MoviesListViewModel
+    public class MoviesListViewModel : PagingViewModel
     {
-        public IEnumerable<MoviesInListViewModel> Movies { get; set; }
+        public IEnumerable<MovieInListViewModel> Movies { get; set; }
     }
 }

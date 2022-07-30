@@ -26,20 +26,20 @@
                 </div>
                 <div class="flex-wrap-movielist">
                     @foreach (var movie in Model.Movies)
-                {
-                    <div class="movie-item-style-2 movie-item-style-1">
-                        <img class="img-fluid lazyload" src="@movie.PosterUrl" alt="">
-                        <div class="hvr-inner">
-                            <a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id"> Read more </a>
+                    {
+                        <div class="movie-item-style-2 movie-item-style-1">
+                            <img class="img-fluid lazyload" src="@movie.PosterUrl" alt="">
+                            <div class="hvr-inner">
+                                <a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id"> Read more </a>
+                            </div>
+                            <div class="mv-item-infor">
+                                <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title</a></h6>
+                                <p class="rate"><i class="bi bi-star-fill" style="color: #f5b50a;"></i><span>@movie.AverageRating.ToString("0.0")</span> / 10</p>
+                            </div>
                         </div>
-                        <div class="mv-item-infor">
-                            <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title</a></h6>
-                            <p class="rate"><i class="bi bi-star-fill" style="color: #f5b50a;"></i><span>@movie.AverageRating.ToString("0.0")</span> / 10</p>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="topbar-filter">
+                    }
+                </div>
+            @*<div class="topbar-filter">
                 <label>Movies per page:</label>
                 <select>
                     <option value="range">20 Movies</option>
@@ -56,27 +56,10 @@
                     <a href="#">79</a>
                     <a href="#"><i class="ion-arrow-right-b"></i></a>
                 </div>
-            </div>
+            </div>*@
             <hr />
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active">
-                            <span class="page-link">
-                                2
-                                <span class="sr-only">(current)</span>
-                            </span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-        </div>
+            <partial name="_PagingPartial" model="@Model" />
+            </div>
         @*			<div class="col-md-4 col-sm-12 col-xs-12">
         <div class="sidebar">
         <div class="searh-form">

@@ -120,16 +120,23 @@
             return this.View(model);
         }
 
-        public IActionResult All()
+        public IActionResult All(int id)
         {
-            var movies = this.moviesService.GetAll<MoviesInListViewModel>();
-
-            var model = new MoviesListViewModel
+            if (id <= 0)
             {
-                Movies = movies,
+                return this.NotFound();
+            }
+
+            const int ItemsPerPage = 12;
+            var viewModel = new MoviesListViewModel
+            {
+                ItemsPerPage = ItemsPerPage,
+                PageNumber = id,
+                MoviesCount = this.moviesService.GetCount(),
+                Movies = this.moviesService.GetAll<MovieInListViewModel>(id, ItemsPerPage),
             };
 
-            return this.View(model);
+            return this.View(viewModel);
         }
     }
 }

@@ -305,9 +305,19 @@
                 */
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12)
         {
-            return this.moviesRepository.AllAsNoTracking().To<T>().ToList();
+            var movies = this.moviesRepository.AllAsNoTracking()
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                .To<T>().ToList();
+
+            return movies;
+        }
+
+        public int GetCount()
+        {
+            return this.moviesRepository.All().Count();
         }
 
         public async Task<IEnumerable<T>> GetPopularMoviesAsync<T>()
