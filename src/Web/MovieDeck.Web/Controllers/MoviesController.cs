@@ -120,7 +120,7 @@
             return this.View(model);
         }
 
-        public IActionResult All(int id)
+        public IActionResult All(int id = 1)
         {
             if (id <= 0)
             {
