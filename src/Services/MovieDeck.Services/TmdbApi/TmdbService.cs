@@ -195,6 +195,11 @@
                 return null;
             }
 
+            if (movieInfo.ImdbId == null || movieInfo.Adult)
+            {
+                return null;
+            }
+
             var movie = new MovieDto
             {
                 Title = movieInfo.Title,
