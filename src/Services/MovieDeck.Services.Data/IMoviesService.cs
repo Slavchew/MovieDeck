@@ -22,6 +22,8 @@
 
         Task<T> GetMovieByIdAsync<T>(int id);
 
+        IEnumerable<T> GetAll<T>();
+
         List<MovieVideoViewModel> GetMovieVideosForSingleMoviePage(int id);
 
         T PopulateMovieInputModelDropdownCollections<T>(T viewModel)

@@ -119,5 +119,17 @@
             model.Videos = this.moviesService.GetMovieVideosForSingleMoviePage(model.OriginalId);
             return this.View(model);
         }
+
+        public IActionResult All()
+        {
+            var movies = this.moviesService.GetAll<MoviesInListViewModel>();
+
+            var model = new MoviesListViewModel
+            {
+                Movies = movies,
+            };
+
+            return this.View(model);
+        }
     }
 }

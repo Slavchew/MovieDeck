@@ -305,6 +305,11 @@
                 */
         }
 
+        public IEnumerable<T> GetAll<T>()
+        {
+            return this.moviesRepository.AllAsNoTracking().To<T>().ToList();
+        }
+
         public async Task<IEnumerable<T>> GetPopularMoviesAsync<T>()
         {
             var originalIds = await this.tmdbService.GetPopularMoviesOriginalIdAsync();
@@ -400,7 +405,7 @@
         {
             foreach (var originalId in originalIds)
             {
-                if (this.moviesRepository.AllWithDeleted().Any(x => x.OriginalId == originalId))
+                if (this.moviesRepository.AllAsNoTrackingWithDeleted().Any(x => x.OriginalId == originalId))
                 {
                     continue;
                 }

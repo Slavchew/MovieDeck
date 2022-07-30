@@ -1,0 +1,138 @@
+﻿@model MovieDeck.Web.ViewModels.Movies.MoviesListViewModel
+
+@{
+    this.ViewData["Title"] = "All Movies";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
+}
+
+<div class="page-single">
+    <div class="container">
+        <div class="row ipad-width">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="topbar-filter">
+                    <p>Found <span>@Model.Movies.Count() movies</span> in total</p>
+                    <label>Sort by:</label>
+                    <select>
+                        <option value="popularity">Popularity Descending</option>
+                        <option value="popularity">Popularity Ascending</option>
+                        <option value="rating">Rating Descending</option>
+                        <option value="rating">Rating Ascending</option>
+                        <option value="date">Release date Descending</option>
+                        <option value="date">Release date Ascending</option>
+                    </select>
+                </div>
+                <div class="flex-wrap-movielist">
+                    @foreach (var movie in Model.Movies)
+                {
+                    <div class="movie-item-style-2 movie-item-style-1">
+                        <img class="img-fluid lazyload" src="@movie.PosterUrl" alt="">
+                        <div class="hvr-inner">
+                            <a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id"> Read more </a>
+                        </div>
+                        <div class="mv-item-infor">
+                            <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title</a></h6>
+                            <p class="rate"><i class="bi bi-star-fill" style="color: #f5b50a;"></i><span>@movie.AverageRating.ToString("0.0")</span> / 10</p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="topbar-filter">
+                <label>Movies per page:</label>
+                <select>
+                    <option value="range">20 Movies</option>
+                    <option value="saab">10 Movies</option>
+                </select>
+
+                <div class="pagination2">
+                    <span>Page 1 of 2:</span>
+                    <a class="active" href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">...</a>
+                    <a href="#">78</a>
+                    <a href="#">79</a>
+                    <a href="#"><i class="ion-arrow-right-b"></i></a>
+                </div>
+            </div>
+            <hr />
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <span class="page-link">Previous</span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <span class="page-link">
+                                2
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+        </div>
+        @*			<div class="col-md-4 col-sm-12 col-xs-12">
+        <div class="sidebar">
+        <div class="searh-form">
+        <h4 class="sb-title">Search for movie</h4>
+        <form class="form-style-1" action="#">
+        <div class="row">
+        <div class="col-md-12 form-it">
+        <label>Movie name</label>
+        <input type="text" placeholder="Enter keywords">
+        </div>
+        <div class="col-md-12 form-it">
+        <label>Genres & Subgenres</label>
+        <div class="group-ip">
+        <select
+        name="skills" multiple="" class="ui fluid dropdown">
+        <option value="">Enter to filter genres</option>
+        <option value="Action1">Action 1</option>
+        <option value="Action2">Action 2</option>
+        <option value="Action3">Action 3</option>
+        <option value="Action4">Action 4</option>
+        <option value="Action5">Action 5</option>
+        </select>
+        </div>
+        </div>
+        <div class="col-md-12 form-it">
+        <label>Rating Range</label>
+        <select>
+        <option value="range">-- Select the rating range below --</option>
+        <option value="saab">-- Select the rating range below --</option>
+        </select>
+        </div>
+        <div class="col-md-12 form-it">
+        <label>Release Year</label>
+        <div class="row">
+        <div class="col-md-6">
+        <select>
+        <option value="range">From</option>
+        <option value="number">10</option>
+        </select>
+        </div>
+        <div class="col-md-6">
+        <select>
+        <option value="range">To</option>
+        <option value="number">20</option>
+        </select>
+        </div>
+        </div>
+        </div>
+        <div class="col-md-12 ">
+        <input class="submit" type="submit" value="submit">
+        </div>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>*@
+        </div>
+    </div>
+</div>
