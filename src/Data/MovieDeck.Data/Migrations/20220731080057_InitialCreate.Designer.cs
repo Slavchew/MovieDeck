@@ -10,8 +10,8 @@ using MovieDeck.Data;
 namespace MovieDeck.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220727071039_AddActorAndDirectorsOriginalId")]
-    partial class AddActorAndDirectorsOriginalId
+    [Migration("20220731080057_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

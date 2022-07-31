@@ -1,6 +1,7 @@
 ﻿namespace MovieDeck.Services.Data
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -324,7 +325,9 @@
         {
             var originalIds = await this.tmdbService.GetPopularMoviesOriginalIdAsync();
 
-            await this.ImportMoviesIfNotExistAsync(originalIds);
+            var concurrentBag = new ConcurrentBag<int>(originalIds);
+
+            await this.ImportMoviesIfNotExistAsync(concurrentBag);
 
             var popularMovies = new List<T>();
             foreach (var originalId in originalIds)
@@ -349,7 +352,9 @@
         {
             var originalIds = await this.tmdbService.GetUpcomingMoviesOriginalIdAsync();
 
-            await this.ImportMoviesIfNotExistAsync(originalIds);
+            var concurrentBag = new ConcurrentBag<int>(originalIds);
+
+            await this.ImportMoviesIfNotExistAsync(concurrentBag);
 
             var upcomingMovies = new List<T>();
             foreach (var originalId in originalIds)
@@ -411,7 +416,7 @@
             return viewModel;
         }
 
-        private async Task ImportMoviesIfNotExistAsync(IEnumerable<int> originalIds)
+        private async Task ImportMoviesIfNotExistAsync(ConcurrentBag<int> originalIds)
         {
             foreach (var originalId in originalIds)
             {

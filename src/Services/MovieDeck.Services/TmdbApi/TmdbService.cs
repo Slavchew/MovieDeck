@@ -1,6 +1,7 @@
 ﻿namespace MovieDeck.Services.TmdbApi
 {
     using System;
+using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -153,7 +154,7 @@
 
         public async Task ImportMoviesInRangeAsync(int fromId, int toId)
         {
-            var movies = await this.GetMoviesInRangeAsync(fromId, toId);
+            var movies = this.GetMoviesInRange(fromId, toId);
 
             foreach (var movieDto in movies)
             {
@@ -311,18 +312,17 @@
             return movieInfo.Images.Backdrops.Select(x => x.FilePath).ToList();
         }
 
-        private async Task<IEnumerable<MovieDto>> GetMoviesInRangeAsync(int fromId, int toId)
+        private ConcurrentBag<MovieDto> GetMoviesInRange(int fromId, int toId)
         {
-            var movies = new List<MovieDto>();
-            for (int i = fromId; i <= toId; i++)
+            var movies = new ConcurrentBag<MovieDto>();
+            Parallel.For(fromId, toId + 1, async i =>
             {
                 var movie = await this.GetMovieById(i);
-
                 if (movie != null)
                 {
                     movies.Add(movie);
                 }
-            }
+            });
 
             return movies;
         }
