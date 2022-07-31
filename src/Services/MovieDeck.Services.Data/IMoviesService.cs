@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using MovieDeck.Data.Models;
+    using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
 
     public interface IMoviesService
@@ -22,13 +23,13 @@
 
         Task<T> GetMovieByIdAsync<T>(int id);
 
-        int GetCount();
-
-        IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12);
-
         List<MovieVideoViewModel> GetMovieVideosForSingleMoviePage(int id);
+
+        SearchMovieInputModel PopulateSearchInputModelWithGenres(SearchMovieInputModel viewModel);
 
         T PopulateMovieInputModelDropdownCollections<T>(T viewModel)
             where T : MovieInputModelDropdownItems;
+
+        IEnumerable<T> GetMoviesBySearch<T>(int id, int itemsPerPage, SearchMovieInputModel searchModel, out int movieCount);
     }
 }

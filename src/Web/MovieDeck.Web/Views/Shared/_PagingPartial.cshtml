@@ -1,13 +1,13 @@
 ﻿@model PagingViewModel
 <ul class="pagination pagination-lg justify-content-center">
     <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
-        <a class="page-link" asp-action="All" asp-route-id="@Model.PreviousPageNumber">Prev</a>
+        <a class="page-link" asp-action="All" asp-all-route-data="@this.Context.Request.Query.ToDictionary(d=>d.Key,d=>d.Value.ToString())"  asp-route-id="@Model.PreviousPageNumber">Prev</a>
     </li>
     @for (int i = Model.PageNumber - 4; i < Model.PageNumber; i++)
     {
         if (i > 0)
         {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+            <li class="page-item"><a class="page-link" asp-action="All" asp-all-route-data="@this.Context.Request.Query.ToDictionary(d=>d.Key,d=>d.Value.ToString())" asp-route-id="@i">@i</a></li>
         }
     }
     <li class="page-item active" aria-current="page">
@@ -20,10 +20,10 @@
     {
         if (i <= Model.PagesCount)
         {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+            <li class="page-item"><a class="page-link" asp-action="All" asp-all-route-data="@this.Context.Request.Query.ToDictionary(d=>d.Key,d=>d.Value.ToString())" asp-route-id="@i">@i</a></li>
         }
     }
     <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
-        <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">Nеxt</a>
+        <a class="page-link" asp-action="All" asp-all-route-data="@this.Context.Request.Query.ToDictionary(d=>d.Key,d=>d.Value.ToString())" asp-route-id="@Model.NextPageNumber">Nеxt</a>
     </li>
 </ul>

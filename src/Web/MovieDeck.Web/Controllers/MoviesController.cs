@@ -1,6 +1,7 @@
 ﻿namespace MovieDeck.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@
 
     using MovieDeck.Common;
     using MovieDeck.Services.Data;
+using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
 
     public class MoviesController : BaseController
@@ -17,6 +19,7 @@
         private readonly IMoviesService moviesService;
         private readonly IRatingsService ratingsService;
         private readonly IWebHostEnvironment environment;
+        private const int ItemsPerPage = 12;
 
         public MoviesController(
             IMoviesService moviesService,
@@ -120,21 +123,29 @@
             return this.View(model);
         }
 
-        public IActionResult All(int id = 1)
+        public IActionResult All(SearchMovieInputModel searchModel, int id = 1)
         {
             if (id <= 0)
             {
                 return this.NotFound();
             }
 
-            const int ItemsPerPage = 12;
+            int movieCount;
+
             var viewModel = new MoviesListViewModel
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                MoviesCount = this.moviesService.GetCount(),
-                Movies = this.moviesService.GetAll<MovieInListViewModel>(id, ItemsPerPage),
+                Movies = this.moviesService.GetMoviesBySearch<MovieInListViewModel>(id, ItemsPerPage, searchModel, out movieCount),
+                MoviesCount = movieCount,
             };
+
+            if (id > viewModel.PagesCount)
+            {
+                return this.NotFound();
+            }
+
+            viewModel.SearchModel = this.moviesService.PopulateSearchInputModelWithGenres(searchModel);
 
             return this.View(viewModel);
         }

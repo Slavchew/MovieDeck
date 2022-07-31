@@ -7,6 +7,7 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/pagination.css" asp-append-version="true">
+
 }
 
 <div class="page-single">
@@ -26,6 +27,10 @@
                     </select>
                 </div>
                 <div class="flex-wrap-movielist">
+                    @if (Model.MoviesCount == 0)
+                    {
+                        <h1>Nothing found.</h1>
+                    }
                     @foreach (var movie in Model.Movies)
                     {
                         <div class="movie-item-style-2 movie-item-style-1">
@@ -40,64 +45,49 @@
                         </div>
                     }
                 </div>
-            <partial name="_PagingPartial" model="@Model" />
+                @if (Model.MoviesCount != 0)
+                {
+                    <partial name="_PagingPartial" model="@Model"  />
+                }
             </div>
-        @*			<div class="col-md-4 col-sm-12 col-xs-12">
-        <div class="sidebar">
-        <div class="searh-form">
-        <h4 class="sb-title">Search for movie</h4>
-        <form class="form-style-1" action="#">
-        <div class="row">
-        <div class="col-md-12 form-it">
-        <label>Movie name</label>
-        <input type="text" placeholder="Enter keywords">
-        </div>
-        <div class="col-md-12 form-it">
-        <label>Genres & Subgenres</label>
-        <div class="group-ip">
-        <select
-        name="skills" multiple="" class="ui fluid dropdown">
-        <option value="">Enter to filter genres</option>
-        <option value="Action1">Action 1</option>
-        <option value="Action2">Action 2</option>
-        <option value="Action3">Action 3</option>
-        <option value="Action4">Action 4</option>
-        <option value="Action5">Action 5</option>
-        </select>
-        </div>
-        </div>
-        <div class="col-md-12 form-it">
-        <label>Rating Range</label>
-        <select>
-        <option value="range">-- Select the rating range below --</option>
-        <option value="saab">-- Select the rating range below --</option>
-        </select>
-        </div>
-        <div class="col-md-12 form-it">
-        <label>Release Year</label>
-        <div class="row">
-        <div class="col-md-6">
-        <select>
-        <option value="range">From</option>
-        <option value="number">10</option>
-        </select>
-        </div>
-        <div class="col-md-6">
-        <select>
-        <option value="range">To</option>
-        <option value="number">20</option>
-        </select>
-        </div>
-        </div>
-        </div>
-        <div class="col-md-12 ">
-        <input class="submit" type="submit" value="submit">
-        </div>
-        </div>
-        </form>
-        </div>
-        </div>
-        </div>*@
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="sidebar">
+                    <div class="searh-form">
+                        <h4 class="sb-title">Search for movie</h4>
+                        <form class="form-style-1" asp-controller="Movies" asp-action="All" asp-route-id="1" method="get">
+                            <div class="row">
+                                <div class="col-md-12 form-it">
+                                    <label class="w-100" asp-for="@Model.SearchModel.Search">Movie name</label>
+                                    <input class="w-100" asp-for="@Model.SearchModel.Search" placeholder="Search by Title">
+                                </div>
+                                <div class="col-md-12 form-it">
+                                    <label asp-for="@Model.SearchModel.GenresIds" class="form-label"></label>
+                                    <select asp-for="@Model.SearchModel.GenresIds" asp-items="@Model.SearchModel.GenresItems" class="form-control form-control-lg input transparent-input selectpicker"
+                                        data-live-search="true" data-actions-box="true" data-size="3"></select>
+                                </div>
+                                <div class="col-md-12 form-it">
+                                    <label>Release Year</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input class="w-100" asp-for="@Model.SearchModel.FromYear" placeholder="From">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="w-100" asp-for="@Model.SearchModel.ToYear" placeholder="To">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 ">
+                                    <input class="submit" type="submit" value="submit">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js" asp-append-version="true"></script>
+}

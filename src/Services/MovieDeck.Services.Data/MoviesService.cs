@@ -6,7 +6,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +15,7 @@
     using MovieDeck.Data.Models;
     using MovieDeck.Services.Mapping;
     using MovieDeck.Services.TmdbApi;
+    using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
 
     public class MoviesService : IMoviesService
@@ -306,19 +307,42 @@
                 */
         }
 
-        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12)
+        public IEnumerable<T> GetMoviesBySearch<T>(int page, int itemsPerPage, SearchMovieInputModel searchModel, out int moviesCount)
         {
-            var movies = this.moviesRepository.AllAsNoTracking()
+            var query = this.moviesRepository.All().AsQueryable();
+
+            if (searchModel?.Search != null)
+            {
+                query = query.Where(x => x.Title.Contains(searchModel.Search));
+            }
+
+            if (searchModel?.GenresIds != null)
+            {
+                foreach (var genreId in searchModel.GenresIds)
+                {
+                    query = query.Where(x => x.Genres.Any(i => i.GenreId == genreId));
+                }
+            }
+
+            if (searchModel?.FromYear != null)
+            {
+                query = query.Where(x => x.ReleaseDate.Value.Year >= searchModel.FromYear);
+            }
+
+            if (searchModel?.ToYear != null)
+            {
+                query = query.Where(x => x.ReleaseDate.Value.Year <= searchModel.ToYear);
+            }
+
+            moviesCount = query.Count();
+
+            var movies = query
                 .OrderBy(x => x.Id)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                .To<T>().ToList();
+                .To<T>()
+                .ToList();
 
             return movies;
-        }
-
-        public int GetCount()
-        {
-            return this.moviesRepository.All().Count();
         }
 
         public async Task<IEnumerable<T>> GetPopularMoviesAsync<T>()
@@ -411,6 +435,14 @@
             viewModel.DirectorsItems = this.directorsService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key));
             viewModel.CompaniesItems = this.companiesService.GetAllAsKeyValuePairs()
+                .Select(x => new SelectListItem(x.Value, x.Key));
+
+            return viewModel;
+        }
+
+        public SearchMovieInputModel PopulateSearchInputModelWithGenres(SearchMovieInputModel viewModel)
+        {
+            viewModel.GenresItems = this.genresService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key));
 
             return viewModel;
