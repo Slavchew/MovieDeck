@@ -315,9 +315,9 @@ using System.Collections.Concurrent;
         private ConcurrentBag<MovieDto> GetMoviesInRange(int fromId, int toId)
         {
             var movies = new ConcurrentBag<MovieDto>();
-            Parallel.For(fromId, toId + 1, async i =>
+            Parallel.For(fromId, toId + 1, i =>
             {
-                var movie = await this.GetMovieById(i);
+                var movie = this.GetMovieById(i).GetAwaiter().GetResult();
                 if (movie != null)
                 {
                     movies.Add(movie);
