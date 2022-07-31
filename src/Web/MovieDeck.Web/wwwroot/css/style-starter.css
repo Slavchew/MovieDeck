@@ -3543,9 +3543,6 @@ nav#breadcrumbs a {
         color: var(--theme-para);
     }
 
-.w3l-blog-single .pagination {
-    margin-top: 3em;
-}
 
 /*--/paginations--*/
 ul.page-numbers li a {
@@ -3748,10 +3745,6 @@ ul.page-numbers li {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 20px;
-    }
-
-    .w3l-blog-single .pagination {
-        display: none;
     }
 
     .w3l-blog-single .single {

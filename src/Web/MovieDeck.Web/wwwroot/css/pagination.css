@@ -1,0 +1,41 @@
+﻿.pagination > li > a {
+    font-family: 'Dosis', sans-serif;
+    background-color: #041a2f;
+    border-color: #062746;
+    color: white;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    color: white;
+    background-color: #dd003f;
+    border-color: #062746;
+}
+
+.pagination > .active > a {
+    color: white;
+    font-weight: bold;
+    background-color: #dd003f !Important;
+    border: solid 1px #dd003f !Important;
+}
+
+.pagination > .active > a:hover {
+    background-color: #dd003f !Important;
+    font-weight: bold;
+    border: solid 1px #dd003f;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #dd003f;
+    font-weight: bold;
+    border-color: #062746;
+}
+
+.page-item.disabled .page-link {
+    background-color: #041a2f;
+    border-color: #062746;
+}
