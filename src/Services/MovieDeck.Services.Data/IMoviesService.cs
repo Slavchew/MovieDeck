@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using MovieDeck.Data.Models;
     using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
@@ -30,6 +32,8 @@
         T PopulateMovieInputModelDropdownCollections<T>(T viewModel)
             where T : MovieInputModelDropdownItems;
 
-        IEnumerable<T> GetMoviesBySearch<T>(int id, int itemsPerPage, SearchMovieInputModel searchModel, out int movieCount);
+        IEnumerable<SelectListItem> GetOrderOptions();
+
+        IEnumerable<T> GetMoviesBySearch<T>(int id, int itemsPerPage, SearchMovieInputModel searchModel, string order, out int movieCount);
     }
 }

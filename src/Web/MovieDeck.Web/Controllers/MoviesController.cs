@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+using AngleSharp.Io;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -123,7 +124,7 @@ using MovieDeck.Web.ViewModels;
             return this.View(model);
         }
 
-        public IActionResult All(SearchMovieInputModel searchModel, int id = 1)
+        public IActionResult All(string order, SearchMovieInputModel searchModel, int id = 1)
         {
             if (id <= 0)
             {
@@ -136,8 +137,9 @@ using MovieDeck.Web.ViewModels;
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                Movies = this.moviesService.GetMoviesBySearch<MovieInListViewModel>(id, ItemsPerPage, searchModel, out movieCount),
+                Movies = this.moviesService.GetMoviesBySearch<MovieInListViewModel>(id, ItemsPerPage, searchModel, order, out movieCount),
                 MoviesCount = movieCount,
+                Order = order,
             };
 
             if (id > viewModel.PagesCount)
@@ -146,6 +148,7 @@ using MovieDeck.Web.ViewModels;
             }
 
             viewModel.SearchModel = this.moviesService.PopulateSearchInputModelWithGenres(searchModel);
+            viewModel.OrderOptions = this.moviesService.GetOrderOptions();
 
             return this.View(viewModel);
         }

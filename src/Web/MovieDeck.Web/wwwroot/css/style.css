@@ -1054,7 +1054,6 @@ ul {
   }
 }
 .topbar-filter p {
-  padding-right: 200px;
   margin-bottom: 0;
 }
 @media (max-width: 991px) {
@@ -1065,6 +1064,14 @@ ul {
 .topbar-filter p span {
   color: #4280bf;
 }
+
+.topbar-filter .btn-sort {
+    background-color: #dd003f;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 .topbar-filter label,
 .topbar-filter select {
   font-family: 'Nunito', sans-serif;
@@ -1074,11 +1081,9 @@ ul {
   text-transform: none;
 }
 .topbar-filter select {
-  width: 215px;
-  -webkit-appearance: none;
   -moz-appearance: none;
   /* Firefox */
-  background: url('../images/uploads/drop-icon.png') no-repeat right 20px center;
+  background: no-repeat right 20px center;
   border-left: 1px solid #405266;
   border-right: 1px solid #405266;
   border-top: none;

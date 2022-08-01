@@ -58,7 +58,7 @@
                 /// the view should display 0 and the database cannot be divided by zero,
                 /// so you should have this check
                 .ForMember(x => x.AverageRating, opt =>
-                    opt.MapFrom(x => x.RatingsCount + x.Ratings.Count == 0
+                    opt.MapFrom(x => (x.RatingsCount + x.Ratings.Count) == 0
                         ? 0
                         : ((x.ImdbRating * x.RatingsCount)
                             + x.Ratings.Sum(x => x.Value)) / (x.RatingsCount + x.Ratings.Count)))

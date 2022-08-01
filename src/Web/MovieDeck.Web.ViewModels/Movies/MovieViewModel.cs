@@ -45,7 +45,7 @@ using System.Collections.Generic;
                         $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.BackdropPath :
                         string.Format(GlobalConstants.RemoteImagesUrl, x.BackdropPath)))
                 .ForMember(x => x.AverageRating, opt =>
-                    opt.MapFrom(x => x.RatingsCount + x.Ratings.Count == 0
+                    opt.MapFrom(x => (x.RatingsCount + x.Ratings.Count) == 0
                         ? 0
                         : ((x.ImdbRating * x.RatingsCount)
                             + x.Ratings.Sum(x => x.Value)) / (x.RatingsCount + x.Ratings.Count)));

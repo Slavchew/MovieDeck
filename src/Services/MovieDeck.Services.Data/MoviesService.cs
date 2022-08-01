@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDeck.Services.TmdbApi;
     using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
+using Newtonsoft.Json.Linq;
 
     public class MoviesService : IMoviesService
     {
@@ -307,7 +308,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
                 */
         }
 
-        public IEnumerable<T> GetMoviesBySearch<T>(int page, int itemsPerPage, SearchMovieInputModel searchModel, out int moviesCount)
+        public IEnumerable<T> GetMoviesBySearch<T>(int page, int itemsPerPage, SearchMovieInputModel searchModel, string order, out int moviesCount)
         {
             var query = this.moviesRepository.All().AsQueryable();
 
@@ -336,8 +337,41 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
             moviesCount = query.Count();
 
+            if (order != null)
+            {
+                if (order == "popularityDesc")
+                {
+                    query = query.OrderByDescending(x => x.RatingsCount);
+                }
+                else if (order == "popularityAsc")
+                {
+                    query = query.OrderBy(x => x.RatingsCount);
+                }
+                else if (order == "ratingDesc")
+                {
+                    query = query.OrderByDescending(x => (x.RatingsCount + x.Ratings.Count) == 0
+                        ? 0
+                        : ((x.ImdbRating * x.RatingsCount)
+                            + x.Ratings.Sum(x => x.Value)) / (x.RatingsCount + x.Ratings.Count));
+                }
+                else if (order == "ratingAsc")
+                {
+                    query = query.OrderBy(x => (x.RatingsCount + x.Ratings.Count) == 0
+                        ? 0
+                        : ((x.ImdbRating * x.RatingsCount)
+                            + x.Ratings.Sum(x => x.Value)) / (x.RatingsCount + x.Ratings.Count));
+                }
+                else if (order == "dateDesc")
+                {
+                    query = query.OrderByDescending(x => x.ReleaseDate);
+                }
+                else if (order == "dateAsc")
+                {
+                    query = query.OrderBy(x => x.ReleaseDate);
+                }
+            }
+
             var movies = query
-                .OrderBy(x => x.Id)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
                 .ToList();
@@ -423,6 +457,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
             }
 
             return movieVideos;
+        }
+
+        public IEnumerable<SelectListItem> GetOrderOptions()
+        {
+            var options = new List<SelectListItem>()
+            {
+                new SelectListItem("ById (Default)", "byId"),
+                new SelectListItem("Popularity Descending", "popularityDesc"),
+                new SelectListItem("Popularity Ascending", "popularityAsc"),
+                new SelectListItem("Rating Descending", "ratingDesc"),
+                new SelectListItem("Rating Ascending", "ratingAsc"),
+                new SelectListItem("Release Date Descending", "dateDesc"),
+                new SelectListItem("Release Date Ascending", "dateAsc"),
+            };
+
+            return options;
         }
 
         public T PopulateMovieInputModelDropdownCollections<T>(T viewModel)

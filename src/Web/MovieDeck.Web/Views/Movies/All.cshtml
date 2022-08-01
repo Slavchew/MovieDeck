@@ -16,15 +16,13 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
                     <p>Found <span>@Model.MoviesCount movies</span> in total</p>
-                    <label>Sort by:</label>
-                    <select>
-                        <option value="popularity">Popularity Descending</option>
-                        <option value="popularity">Popularity Ascending</option>
-                        <option value="rating">Rating Descending</option>
-                        <option value="rating">Rating Ascending</option>
-                        <option value="date">Release date Descending</option>
-                        <option value="date">Release date Ascending</option>
-                    </select>
+                    @*<div>
+                        <form asp-controller="Movies" asp-action="All" asp-route-id="1" method="get">
+                            <label>Sort by:</label>
+                            <select asp-for="Order" asp-items="Model.OrderOptions"></select>
+                            <input class="btn btn-sort" type="submit" value="Sort">
+                        </form>
+                    </div>*@
                 </div>
                 <div class="flex-wrap-movielist">
                     @if (Model.MoviesCount == 0)
@@ -57,27 +55,31 @@
                         <form class="form-style-1" asp-controller="Movies" asp-action="All" asp-route-id="1" method="get">
                             <div class="row">
                                 <div class="col-md-12 form-it">
-                                    <label class="w-100" asp-for="@Model.SearchModel.Search">Movie name</label>
-                                    <input class="w-100" asp-for="@Model.SearchModel.Search" placeholder="Search by Title">
+                                    <label class="w-100" asp-for="SearchModel.Search">Movie name</label>
+                                    <input class="w-100 pl-3" asp-for="SearchModel.Search" placeholder="Search by Title">
                                 </div>
                                 <div class="col-md-12 form-it">
-                                    <label asp-for="@Model.SearchModel.GenresIds" class="form-label"></label>
-                                    <select asp-for="@Model.SearchModel.GenresIds" asp-items="@Model.SearchModel.GenresItems" class="form-control form-control-lg input transparent-input selectpicker"
+                                    <label asp-for="SearchModel.GenresIds" class="form-label"></label>
+                                    <select asp-for="SearchModel.GenresIds" asp-items="@Model.SearchModel.GenresItems" class="form-control form-control-lg input transparent-input selectpicker"
                                         data-live-search="true" data-actions-box="true" data-size="3"></select>
                                 </div>
                                 <div class="col-md-12 form-it">
                                     <label>Release Year</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input class="w-100" asp-for="@Model.SearchModel.FromYear" placeholder="From">
+                                            <input class="w-100 pl-3" asp-for="SearchModel.FromYear" placeholder="From">
                                         </div>
                                         <div class="col-md-6">
-                                            <input class="w-100" asp-for="@Model.SearchModel.ToYear" placeholder="To">
+                                            <input class="w-100 pl-3" asp-for="SearchModel.ToYear" placeholder="To">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 form-it">
+                                    <label class="w-100">Sort By:</label>
+                                    <select asp-for="Order" asp-items="Model.OrderOptions" class="w-100 pl-3"></select>
+                                </div>
                                 <div class="col-md-12 ">
-                                    <input class="submit" type="submit" value="submit">
+                                    <input class="submit" type="submit" value="Search">
                                 </div>
                             </div>
                         </form>

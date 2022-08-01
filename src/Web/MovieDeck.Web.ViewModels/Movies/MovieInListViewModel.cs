@@ -26,7 +26,7 @@
                         $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.PosterPath :
                         string.Format(GlobalConstants.RemoteImagesUrl, x.PosterPath)))
                 .ForMember(x => x.AverageRating, opt =>
-                    opt.MapFrom(x => x.RatingsCount + x.Ratings.Count == 0
+                    opt.MapFrom(x => (x.RatingsCount + x.Ratings.Count) == 0
                         ? 0
                         : ((x.ImdbRating * x.RatingsCount)
                             + x.Ratings.Sum(x => x.Value)) / (x.RatingsCount + x.Ratings.Count)));
