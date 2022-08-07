@@ -12,8 +12,6 @@
     {
         public int Id { get; set; }
 
-        //public List<MovieActorInputModel> ActorsList { get; set; }
-
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, EditMovieInputModel>()

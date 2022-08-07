@@ -1,7 +1,7 @@
 ﻿namespace MovieDeck.Web.ViewModels.Movies
 {
     using System;
-using System.Collections.Generic;
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
@@ -31,15 +31,17 @@ using System.Collections.Generic;
 
         public List<GenreViewModel> Genres { get; set; }
 
-        public int GenresCount => Genres.Count;
+        public int GenresCount => this.Genres.Count;
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieViewModel>()
                 .ForMember(x => x.PosterUrl, opt =>
-                    opt.MapFrom(x => x.PosterPath.Contains("-") ?
-                        $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.PosterPath :
-                        string.Format(GlobalConstants.RemoteImagesUrl, x.PosterPath)))
+                    opt.MapFrom(x => x.PosterPath == null ?
+                        GlobalConstants.BlankMoviePoster :
+                            x.PosterPath.Contains("-") ?
+                            $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.PosterPath :
+                            string.Format(GlobalConstants.RemoteImagesUrl, x.PosterPath)))
                 .ForMember(x => x.BackdropUrl, opt =>
                     opt.MapFrom(x => x.BackdropPath.Contains("-") ?
                         $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.BackdropPath :

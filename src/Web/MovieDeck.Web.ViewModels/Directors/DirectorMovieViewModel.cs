@@ -13,9 +13,11 @@
         {
             configuration.CreateMap<MovieDirector, DirectorMovieViewModel>()
                 .ForMember(x => x.MoviePosterUrl, opt =>
-                    opt.MapFrom(x => x.Movie.PosterPath.Contains("-") ?
-                        $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.Movie.PosterPath :
-                        string.Format(GlobalConstants.RemoteImagesUrl, x.Movie.PosterPath)));
+                    opt.MapFrom(x => x.Movie.PosterPath == null ?
+                        GlobalConstants.BlankMoviePoster :
+                            x.Movie.PosterPath.Contains("-") ?
+                            $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.Movie.PosterPath :
+                            string.Format(GlobalConstants.RemoteImagesUrl, x.Movie.PosterPath)));
         }
     }
 }

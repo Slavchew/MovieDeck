@@ -14,6 +14,8 @@
 
         public const string BlankProfilePicture = "/images/blank-profile-picture.png";
 
+        public const string BlankMoviePoster = "/images/blank-movie-poster.png";
+
         public const string MoviesImagesFolder = "movies";
 
         public const string ActorsImagesFolder = "actors";

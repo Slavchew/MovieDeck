@@ -51,9 +51,11 @@
         {
             configuration.CreateMap<Movie, SingleMovieViewModel>()
                 .ForMember(x => x.PosterUrl, opt =>
-                    opt.MapFrom(x => x.PosterPath.Contains("-") ?
-                        $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.PosterPath :
-                        string.Format(GlobalConstants.RemoteImagesUrl, x.PosterPath)))
+                    opt.MapFrom(x => x.PosterPath == null ?
+                        GlobalConstants.BlankMoviePoster :
+                            x.PosterPath.Contains("-") ?
+                            $"/images/{GlobalConstants.MoviesImagesFolder}/" + x.PosterPath :
+                            string.Format(GlobalConstants.RemoteImagesUrl, x.PosterPath)))
                 /// If the movie has no API ratings and no one has rated it,
                 /// the view should display 0 and the database cannot be divided by zero,
                 /// so you should have this check

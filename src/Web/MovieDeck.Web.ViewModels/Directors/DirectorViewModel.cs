@@ -20,9 +20,11 @@
         {
             configuration.CreateMap<MovieDirector, DirectorViewModel>()
                 .ForMember(x => x.PhotoUrl, opt =>
-                    opt.MapFrom(x => x.Director.PhotoPath.Contains("-") ?
-                        $"/images/{GlobalConstants.DirectorsImagesFolder}/" + x.Director.PhotoPath :
-                        string.Format(GlobalConstants.RemoteImagesUrl, x.Director.PhotoPath)));
+                    opt.MapFrom(x => x.Director.PhotoPath == null ?
+                        GlobalConstants.BlankProfilePicture :
+                            x.Director.PhotoPath.Contains("-") ?
+                            $"/images/{GlobalConstants.DirectorsImagesFolder}/" + x.Director.PhotoPath :
+                            string.Format(GlobalConstants.RemoteImagesUrl, x.Director.PhotoPath)));
         }
     }
 }
