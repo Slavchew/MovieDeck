@@ -72,6 +72,11 @@ using System.Collections.Concurrent;
 
         public async Task ImportMovieAsync(MovieDto movieDto)
         {
+            if (this.moviesRepository.AllAsNoTrackingWithDeleted().Any(x => x.OriginalId == movieDto.OriginalId))
+            {
+                return;
+            }
+
             var movie = new Data.Models.Movie
             {
                 Title = movieDto.Title,
