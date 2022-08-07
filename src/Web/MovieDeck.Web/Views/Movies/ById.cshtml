@@ -139,7 +139,7 @@
                                                 </div>
                                                 <!-- movie cast -->
                                                 <div class="mvcast-item">
-                                                    @foreach (var actor in Model.Actors.ToList().Take(10))
+                                                    @foreach (var actor in Model.Actors.ToList().Where(x => x.ActorPhotoPath != null).Take(10))
                                                     {
                                                         <div class="cast-it">
                                                             <div class="cast-left">
