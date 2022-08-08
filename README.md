@@ -32,6 +32,11 @@ MovieDeck is an IMDB like application based on ASP.NET MVC architecture. There y
 ![MoviePage](./img/movie-page.png)
 ![ActorPage](./img/actor-page.png)
 
+#### Using [ASP.NET-MVC-Template](https://github.com/NikolayIT/ASP.NET-MVC-Template) developed by:
+- [Nikolay Kostov](https://github.com/NikolayIT)
+- [Vladislav Karamfilov](https://github.com/vladislav-karamfilov)
+- [Stoyan Shopov](https://github.com/StoyanShopov)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
