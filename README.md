@@ -26,6 +26,12 @@ MovieDeck is an IMDB like application based on ASP.NET MVC architecture. There y
 * [OwlCarousel2](https://github.com/OwlCarousel2/OwlCarousel2)
 * [Slick](https://github.com/kenwheeler/slick)
 
+## :framed_picture: Screenshots
+
+![HomePage](./img/home-page.png)
+![MoviePage](./img/movie-page.png)
+![ActorPage](./img/actor-page.png)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
