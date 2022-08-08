@@ -28,8 +28,13 @@ MovieDeck is an IMDB like application based on ASP.NET MVC architecture. There y
 
 ## :framed_picture: Screenshots
 
+### Home Page
 ![HomePage](./img/home-page.png)
+
+### Movie Page
 ![MoviePage](./img/movie-page.png)
+
+### Actor Page
 ![ActorPage](./img/actor-page.png)
 
 #### Using [ASP.NET-MVC-Template](https://github.com/NikolayIT/ASP.NET-MVC-Template) developed by:
