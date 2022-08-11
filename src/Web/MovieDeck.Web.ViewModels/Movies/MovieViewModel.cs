@@ -19,6 +19,8 @@
 
         public string Plot { get; set; }
 
+        public string PlotShort => this.Plot.Substring(0, 80);
+
         public DateTime? ReleaseDate { get; set; }
 
         public TimeSpan Runtime { get; set; }

@@ -12,7 +12,7 @@
     <section class="w3l-main-slider position-relative" id="home">
         <div class="companies20-content">
             <div class="owl-one owl-carousel owl-theme">
-                @foreach (var movie in Model.Movies)
+                @foreach (var movie in Model.Movies.Take(10))
                 {
                     <div class="item">
                         <div class="slider-info">
@@ -123,10 +123,10 @@
                                     </div>
                                 </div>
                             </a>
-                            <h3> <a class="title-gd" asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title</a></h3>
-                            <p>@movie.Plot</p>
+                            <h3><a class="title-gd" asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title</a></h3>
+                            <p>@movie.PlotShort</p>
                             <div class="button-center text-center mt-4">
-                                <a href="#" class="btn watch-button">Watch Trailer</a>
+                                <a id="watchTrailerBtn" asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id" class="btn watch-button">Watch Trailer</a>
                             </div>
                         </div>
                     }
@@ -147,14 +147,14 @@
                                 <div class="mid-info">
                                     <span class="sub-text">Comedy</span>
                                     <h3>Jumanji: The Next Level</h3>
-                                    <p>2019 ‧ Comedy/Action ‧ 2h 3m</p>
-                                    <a class="watch" href="genre.html">
+                                    <p>2019 ‧ 2h 3m</p>
+@*                                    <a class="watch" href="genre.html">
 
                                         <span class="bi bi-play-fill"
                                               aria-hidden="true"></span>
                                         Watch Trailer
 
-                                    </a>
+                                    </a>*@
                                 </div>
                             </div>
                         </div>
@@ -167,14 +167,14 @@
                                 <div class="mid-info">
                                     <span class="sub-text">Adventure</span>
                                     <h3>Dolittle</h3>
-                                    <p>2020 ‧ Family/Adventure ‧ 1h 41m</p>
-                                    <a class="watch" href="genre.html">
+                                    <p>2020 ‧ 1h 41m</p>
+@*                                    <a class="watch" href="genre.html">
 
                                         <span class="bi bi-play-fill"
                                               aria-hidden="true"></span>
                                         Watch Trailer
 
-                                    </a>
+                                    </a>*@
                                 </div>
                             </div>
                         </div>
@@ -187,14 +187,14 @@
                                 <div class="mid-info">
                                     <span class="sub-text">Action</span>
                                     <h3>Bad Boys for Life</h3>
-                                    <p>2020 ‧ Comedy/Action ‧ 2h 4m</p>
-                                    <a class="watch" href="genre.html">
+                                    <p>2020 ‧ 2h 4m</p>
+@*                                    <a class="watch" href="genre.html">
 
                                         <span class="bi bi-play-fill"
                                               aria-hidden="true"></span>
                                         Watch Trailer
 
-                                    </a>
+                                    </a>*@
                                 </div>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                         <div class="resp-tabs-container hor_1">
                             <div class="albums-content">
                                 <div class="row">
-                                    @foreach (var movie in Model.Movies)
+                                    @foreach (var movie in Model.Movies.Take(10))
                                     {
                                         <div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
                                             <div class="slider-info">
@@ -244,10 +244,9 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
     <!-- //tabs-->
-    <!-- footer-66 -->
+    @*<!-- footer-66 -->
     <footer class="w3l-footer">
         <section class="footer-inner-main">
             <div class="footer-hny-grids py-5">
@@ -375,10 +374,19 @@
             <!-- copyright -->
         </section>
     </footer>
-    <!--//footer-66 -->
+    <!--//footer-66 -->*@
 </body>
 
 @section Scripts {
+@*    <script>
+        $(document).ready(function() {
+            $('#watchTrailerBtn').click(() => {
+                $('#trailerLink').click();
+            })
+        })
+    </script>*@
+
+
 <script type="text/javascript">
     $(document).ready(function() {
         //Horizontal Tab
