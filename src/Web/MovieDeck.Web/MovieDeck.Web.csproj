@@ -46,4 +46,9 @@
   <ItemGroup>
     <Folder Include="Areas\Administration\Views\Dashboard\" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+  </PropertyGroup>
+
 </Project>
