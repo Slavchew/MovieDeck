@@ -17,6 +17,8 @@
 
         public string CharacterName { get; set; }
 
+        public int ActorOriginalId { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<MovieActor, ActorViewModel>()

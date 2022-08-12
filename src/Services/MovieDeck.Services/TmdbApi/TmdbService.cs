@@ -154,6 +154,7 @@ using System.Collections.Concurrent;
                 await this.imagesRepository.AddAsync(image);
             }
 
+            Console.WriteLine($"{movie.Title} added with {movie.Actors.Count} actors");
             await this.moviesRepository.SaveChangesAsync();
         }
 
@@ -172,9 +173,9 @@ using System.Collections.Concurrent;
             }
         }
 
-        public async Task<IEnumerable<int>> GetPopularMoviesOriginalIdAsync()
+        public async Task<IEnumerable<int>> GetPopularMoviesOriginalIdAsync(int page)
         {
-            var topPopularMovies = await this.client.GetMoviePopularListAsync();
+            var topPopularMovies = await this.client.GetMoviePopularListAsync(page: page);
 
             return topPopularMovies.Results.Select(x => x.Id);
         }
@@ -225,7 +226,15 @@ using System.Collections.Concurrent;
                 Actors = await this.GetMovieActorsAsync(movieInfo),
             };
 
+            Console.WriteLine($"{movie.Title} got with {movie.Actors.Count} actors");
             return movie;
+        }
+
+        public async Task<List<int>> GetMovieActorsInOrderAsync(int originalId)
+        {
+            var credits = await this.client.GetMovieCreditsAsync(originalId);
+
+            return credits.Cast.Select(x => x.Id).ToList();
         }
 
         public List<MovieVideoDto> GetMovieVideos(int originalId)
@@ -322,10 +331,16 @@ using System.Collections.Concurrent;
             var movies = new ConcurrentBag<MovieDto>();
             Parallel.For(fromId, toId + 1, i =>
             {
-                var movie = this.GetMovieById(i).GetAwaiter().GetResult();
-                if (movie != null)
+                try
                 {
-                    movies.Add(movie);
+                    var movie = this.GetMovieById(i).GetAwaiter().GetResult();
+                    if (movie != null)
+                    {
+                        movies.Add(movie);
+                    }
+                }
+                catch
+                {
                 }
             });
 

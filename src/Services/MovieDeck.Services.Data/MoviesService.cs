@@ -267,6 +267,7 @@ using Newtonsoft.Json.Linq;
                 .To<T>().FirstOrDefaultAsync();
 
                 /* without AutoMapper
+                 * 
                 .Select(x => new SingleMovieViewModel
                 {
                     Id = x.Id,
@@ -306,6 +307,11 @@ using Newtonsoft.Json.Linq;
                             $"/images/movies/{i.Id}.{i.Extension}",
                     }),
                 */
+        }
+
+        public async Task<List<int>> GetActorsOrignalOrderIdsAsync(int id)
+        {
+            return await this.tmdbService.GetMovieActorsInOrderAsync(id);
         }
 
         public IEnumerable<T> GetMoviesBySearch<T>(int page, int itemsPerPage, SearchMovieInputModel searchModel, string order, out int moviesCount)
@@ -379,9 +385,9 @@ using Newtonsoft.Json.Linq;
             return movies;
         }
 
-        public async Task<IEnumerable<T>> GetPopularMoviesAsync<T>()
+        public async Task<IEnumerable<T>> GetPopularMoviesAsync<T>(int page = 0)
         {
-            var originalIds = await this.tmdbService.GetPopularMoviesOriginalIdAsync();
+            var originalIds = await this.tmdbService.GetPopularMoviesOriginalIdAsync(page);
 
             var concurrentBag = new ConcurrentBag<int>(originalIds);
 

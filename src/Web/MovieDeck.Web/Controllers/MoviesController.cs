@@ -121,6 +121,11 @@ using MovieDeck.Web.ViewModels;
 
             model.UserRating = userId == null ? (byte)0 : this.ratingsService.GetUserRating(id, userId);
             model.Videos = this.moviesService.GetMovieVideosForSingleMoviePage(model.OriginalId);
+
+            // Order Actos in original order based on their role in the movie
+            var actorsOriginalOrderIds = await this.moviesService.GetActorsOrignalOrderIdsAsync(model.OriginalId);
+            model.Actors = model.Actors.OrderBy(a => actorsOriginalOrderIds.IndexOf(a.ActorOriginalId));
+
             return this.View(model);
         }
 

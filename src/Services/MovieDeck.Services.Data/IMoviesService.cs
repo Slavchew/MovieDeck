@@ -19,7 +19,7 @@
 
         IEnumerable<T> GetAllForHomePage<T>();
 
-        Task<IEnumerable<T>> GetPopularMoviesAsync<T>();
+        Task<IEnumerable<T>> GetPopularMoviesAsync<T>(int page = 0);
 
         Task<IEnumerable<T>> GetUpcomingMoviesAsync<T>();
 
@@ -35,5 +35,7 @@
         IEnumerable<SelectListItem> GetOrderOptions();
 
         IEnumerable<T> GetMoviesBySearch<T>(int id, int itemsPerPage, SearchMovieInputModel searchModel, string order, out int movieCount);
+
+        Task<List<int>> GetActorsOrignalOrderIdsAsync(int id);
     }
 }

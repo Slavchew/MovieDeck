@@ -13,7 +13,7 @@
 
         void GetAll();
 
-        Task<IEnumerable<int>> GetPopularMoviesOriginalIdAsync();
+        Task<IEnumerable<int>> GetPopularMoviesOriginalIdAsync(int page);
 
         Task<IEnumerable<int>> GetUpcomingMoviesOriginalIdAsync();
 
@@ -24,5 +24,7 @@
         List<PersonImageDto> GetPersonImages(int originalId);
 
         // void GetMoviesInRange(int start, int end);
+
+        Task<List<int>> GetMovieActorsInOrderAsync(int originalId);
     }
 }
