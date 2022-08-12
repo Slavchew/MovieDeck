@@ -257,7 +257,10 @@ using Newtonsoft.Json.Linq;
         public IEnumerable<T> GetAllForHomePage<T>()
         {
             return this.moviesRepository.AllAsNoTracking()
-                    .To<T>().ToList();
+                    .To<T>()
+                    .OrderBy(x => Guid.NewGuid())
+                    .Take(20)
+                    .ToList();
         }
 
         public async Task<T> GetMovieByIdAsync<T>(int id)

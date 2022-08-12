@@ -29,6 +29,8 @@
 
         public string PosterUrl { get; set; }
 
+        public string BackdropPath { get; set; }
+
         public string BackdropUrl { get; set; }
 
         public List<GenreViewModel> Genres { get; set; }

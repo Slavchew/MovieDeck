@@ -12,7 +12,7 @@
     <section class="w3l-main-slider position-relative" id="home">
         <div class="companies20-content">
             <div class="owl-one owl-carousel owl-theme">
-                @foreach (var movie in Model.Movies.Take(10))
+                @foreach (var movie in Model.Movies.Where(x => x.BackdropPath != null))
                 {
                     <div class="item">
                         <div class="slider-info">
@@ -214,7 +214,7 @@
                         <div class="resp-tabs-container hor_1">
                             <div class="albums-content">
                                 <div class="row">
-                                    @foreach (var movie in Model.Movies.Take(10))
+                                    @foreach (var movie in Model.Movies)
                                     {
                                         <div class="col-lg-4 new-relise-gd mt-lg-0 mt-0">
                                             <div class="slider-info">
