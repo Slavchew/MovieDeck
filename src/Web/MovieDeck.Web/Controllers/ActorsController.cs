@@ -1,14 +1,17 @@
 ﻿namespace MovieDeck.Web.Controllers
 {
+    using System.Data;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
+    using MovieDeck.Common;
     using MovieDeck.Services.Data;
     using MovieDeck.Web.ViewModels.Actors;
-using MovieDeck.Web.ViewModels.Movies;
+    using MovieDeck.Web.ViewModels.Movies;
 
     public class ActorsController : BaseController
     {
@@ -23,11 +26,13 @@ using MovieDeck.Web.ViewModels.Movies;
             this.environment = environment;
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateActorInputModel input)
         {

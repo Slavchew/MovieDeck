@@ -32,6 +32,7 @@ using MovieDeck.Web.ViewModels;
             this.environment = environment;
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             var viewModel = new CreateMovieInputModel();
@@ -41,6 +42,7 @@ using MovieDeck.Web.ViewModels;
             return this.View(viewModel);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateMovieInputModel input)
         {
@@ -70,6 +72,7 @@ using MovieDeck.Web.ViewModels;
             return this.Redirect("/");
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             var input = await this.moviesService.GetMovieByIdAsync<EditMovieInputModel>(id);
@@ -83,6 +86,7 @@ using MovieDeck.Web.ViewModels;
         }
 
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id, EditMovieInputModel input)
         {
             if (!this.ModelState.IsValid)

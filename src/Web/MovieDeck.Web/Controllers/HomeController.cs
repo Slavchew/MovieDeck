@@ -4,8 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using MovieDeck.Common;
     using MovieDeck.Services.Data;
     using MovieDeck.Services.TmdbApi;
     using MovieDeck.Web.ViewModels;
@@ -44,11 +46,13 @@
             return this.View();
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Import()
         {
             return this.View();
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Import(int from, int to)
         {
