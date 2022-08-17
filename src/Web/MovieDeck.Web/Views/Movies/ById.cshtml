@@ -643,7 +643,7 @@
         @if (this.User.Identity.IsAuthenticated)
         {
             <text>
-                                        var value = $(this).attr("data-rating");
+                                                                            var value = $(this).attr("data-rating");
                         var movieId = @Model.Id;
 
                         let data = { movieId: movieId, value: value };
@@ -670,7 +670,7 @@
                         ratedIndex = Number($(this).data('rating')) - 1;
             </text>
         }
-                                })
+                                                })
             });
 
             $('i[data-rating]').mouseover(function() {
@@ -704,10 +704,22 @@
         }
     </script>
     <script>
+        var clicked = false;
         var button = document.getElementById("favoriteBtn");
-        button.addEventListener("onclick", (e) => {
-            e.preventDefault;
-            button.textContent = "Remove from favorites";
-        });
+        button.addEventListener("onclick",
+            (e) => {
+                e.preventDefault;
+
+                clicked = true;
+
+                if (clicked) {
+                    button.textContent = "Remove from favorites";
+
+                    clicked = false;
+                }
+                else if (clicked == false) {
+                    button.textContent = "Add to favorites";
+                }
+            });
     </script>
-    }
+}
