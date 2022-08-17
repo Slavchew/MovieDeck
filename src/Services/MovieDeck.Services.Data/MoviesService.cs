@@ -6,7 +6,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDeck.Services.TmdbApi;
     using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
-using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Linq;
 
     public class MoviesService : IMoviesService
     {
@@ -29,6 +29,7 @@ using Newtonsoft.Json.Linq;
         private readonly IRatingsService ratingsService;
         private readonly IImagesService imagesService;
         private readonly ITmdbService tmdbService;
+        private readonly ApplicationUser user;
 
         public MoviesService(
             IDeletableEntityRepository<Movie> moviesRepository,
@@ -269,47 +270,47 @@ using Newtonsoft.Json.Linq;
                 .Where(x => x.Id == id)
                 .To<T>().FirstOrDefaultAsync();
 
-                /* without AutoMapper
-                 * 
-                .Select(x => new SingleMovieViewModel
+            /* without AutoMapper
+             * 
+            .Select(x => new SingleMovieViewModel
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Plot = x.Plot,
+                ReleaseDate = x.ReleaseDate,
+                Runtime = x.Runtime,
+                PosterUrl =
+                    x.PosterPath.Contains("-") ?
+                    "/images/movies/" + x.PosterPath :
+                    this.tmdbService.GenereateImageUrl(x.PosterPath),
+                AverageRating = this.ratingsService.GetAverageRatings(x.Id),
+                RatingsCount = this.ratingsService.GetRatingsCount(x.Id),
+                UserRating = (byte)(userId == null ? 0 : this.ratingsService.GetUserRating(x.Id, userId)),
+                Genres = x.Genres.Select(g => new GenreViewModel
                 {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Plot = x.Plot,
-                    ReleaseDate = x.ReleaseDate,
-                    Runtime = x.Runtime,
-                    PosterUrl =
-                        x.PosterPath.Contains("-") ?
-                        "/images/movies/" + x.PosterPath :
-                        this.tmdbService.GenereateImageUrl(x.PosterPath),
-                    AverageRating = this.ratingsService.GetAverageRatings(x.Id),
-                    RatingsCount = this.ratingsService.GetRatingsCount(x.Id),
-                    UserRating = (byte)(userId == null ? 0 : this.ratingsService.GetUserRating(x.Id, userId)),
-                    Genres = x.Genres.Select(g => new GenreViewModel
-                    {
-                        Name = g.Genre.Name,
-                    }),
-                    Directors = x.Directors.Select(d => new DirectorViewModel
-                    {
-                        Name = d.Director.FullName,
-                        PhotoUrl = this.tmdbService.GenereateImageUrl(d.Director.PhotoPath),
-                        PhotoPath = d.Director.PhotoPath,
-                    }),
-                    Actors = x.Actors.Select(a => new ActorViewModel
-                    {
-                        FullName = a.Actor.FullName,
-                        CharacterName = a.CharacterName,
-                        PhotoUrl = this.tmdbService.GenereateImageUrl(a.Actor.PhotoPath),
-                        PhotoPath = a.Actor.PhotoPath,
-                    }),
-                    Images = x.Images.Select(i => new ImageViewModel
-                    {
-                        PhotoUrl =
-                            i.RemoteImageUrl != null ?
-                            this.tmdbService.GenereateImageUrl(i.RemoteImageUrl) :
-                            $"/images/movies/{i.Id}.{i.Extension}",
-                    }),
-                */
+                    Name = g.Genre.Name,
+                }),
+                Directors = x.Directors.Select(d => new DirectorViewModel
+                {
+                    Name = d.Director.FullName,
+                    PhotoUrl = this.tmdbService.GenereateImageUrl(d.Director.PhotoPath),
+                    PhotoPath = d.Director.PhotoPath,
+                }),
+                Actors = x.Actors.Select(a => new ActorViewModel
+                {
+                    FullName = a.Actor.FullName,
+                    CharacterName = a.CharacterName,
+                    PhotoUrl = this.tmdbService.GenereateImageUrl(a.Actor.PhotoPath),
+                    PhotoPath = a.Actor.PhotoPath,
+                }),
+                Images = x.Images.Select(i => new ImageViewModel
+                {
+                    PhotoUrl =
+                        i.RemoteImageUrl != null ?
+                        this.tmdbService.GenereateImageUrl(i.RemoteImageUrl) :
+                        $"/images/movies/{i.Id}.{i.Extension}",
+                }),
+            */
         }
 
         public async Task<List<int>> GetActorsOrignalOrderIdsAsync(int id)
@@ -524,6 +525,13 @@ using Newtonsoft.Json.Linq;
 
                 await this.tmdbService.ImportMovieAsync(movieDto);
             }
+        }
+
+        public bool IsInWatchList(int movieId)
+        {
+            var movie = this.GetMovieByIdAsync<Movie>(movieId);
+
+            return this.user.Watchlists.Select(x => x.Movies.Any(m => m.Id == movieId)).FirstOrDefault();
         }
     }
 }

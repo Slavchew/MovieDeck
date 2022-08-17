@@ -37,6 +37,8 @@
 
         public byte UserRating { get; set; }
 
+        public bool IsInWatchList { get; set; }
+
         public IEnumerable<DirectorViewModel> Directors { get; set; }
 
         public IEnumerable<ActorViewModel> Actors { get; set; }

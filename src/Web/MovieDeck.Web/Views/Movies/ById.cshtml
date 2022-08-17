@@ -70,7 +70,14 @@
                 <div class="movie-single-ct main-content">
                     <h1 class="bd-hd">@Model.Title <span>@Model.ReleaseDate.Value.Year</span></h1>
                     <div class="social-btn">
-                        <a id="favoriteBtn" href="#" class="parent-btn"><i class="bi bi-heart-fill"></i> Add to Favorite</a>
+                        @if (Model.IsInWatchList)
+                        {
+                            <a id="favoriteBtn" href="#" class="parent-btn"><i class="bi bi-heart-fill"></i> Add to Favorite</a>
+                        }
+                        else
+                        {
+                            <a id="favoriteBtn" href="#" class="parent-btn"><i class="bi bi-heart-fill"></i> Remove from favorites</a>
+                        }
                     </div>
                     <div class="movie-rate">
                         <div class="rate">
@@ -643,7 +650,7 @@
         @if (this.User.Identity.IsAuthenticated)
         {
             <text>
-                                                                            var value = $(this).attr("data-rating");
+                                  var value = $(this).attr("data-rating");
                         var movieId = @Model.Id;
 
                         let data = { movieId: movieId, value: value };
@@ -670,7 +677,7 @@
                         ratedIndex = Number($(this).data('rating')) - 1;
             </text>
         }
-                                                })
+                                                                })
             });
 
             $('i[data-rating]').mouseover(function() {
@@ -703,7 +710,7 @@
             $('i[data-rating]').removeClass('bi-star-fill').addClass('bi-star');
         }
     </script>
-    <script>
+ @*   <script>
         var clicked = false;
         var button = document.getElementById("favoriteBtn");
         button.addEventListener("onclick",
@@ -721,5 +728,5 @@
                     button.textContent = "Add to favorites";
                 }
             });
-    </script>
+    </script>*@
 }

@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-using AngleSharp.Io;
+    using AngleSharp.Io;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -12,7 +12,7 @@ using AngleSharp.Io;
 
     using MovieDeck.Common;
     using MovieDeck.Services.Data;
-using MovieDeck.Web.ViewModels;
+    using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
 
     public class MoviesController : BaseController
@@ -122,6 +122,8 @@ using MovieDeck.Web.ViewModels;
             {
                 userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             }
+
+            model.IsInWatchList = this.moviesService.IsInWatchList(model.Id);
 
             model.UserRating = userId == null ? (byte)0 : this.ratingsService.GetUserRating(id, userId);
             model.Videos = this.moviesService.GetMovieVideosForSingleMoviePage(model.OriginalId);

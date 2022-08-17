@@ -37,5 +37,7 @@
         IEnumerable<T> GetMoviesBySearch<T>(int id, int itemsPerPage, SearchMovieInputModel searchModel, string order, out int movieCount);
 
         Task<List<int>> GetActorsOrignalOrderIdsAsync(int id);
+
+        bool IsInWatchList(int movieId);
     }
 }
