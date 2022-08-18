@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="~/css/youtubeModel.css" asp-append-version="true">
 }
 
-<div class="page-single movie-single movie_single">
-    <div class="container">
-        <div class="row ipad-width2">
-            <div class="col-md-4 col-sm-12 col-xs-12">
-                <div class="movie-img sticky-sb">
-                    <img src="@Model.PosterUrl" alt="">
-                    <div class="movie-btn">
-                        @if (this.Model.TrailerUrl != "#")
+    <div class="page-single movie-single movie_single">
+        <div class="container">
+            <div class="row ipad-width2">
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="movie-img sticky-sb">
+                        <img src="@Model.PosterUrl" alt="">
+                        <div class="movie-btn">
+                            @if (this.Model.TrailerUrl != "#")
                         {
                             <div class="btn-transform transform-vertical red mb-3">
                                 <div>
@@ -70,7 +70,14 @@
                 <div class="movie-single-ct main-content">
                     <h1 class="bd-hd">@Model.Title <span>@Model.ReleaseDate.Value.Year</span></h1>
                     <div class="social-btn">
-                        <a href="#" class="parent-btn"><i class="bi bi-heart-fill"></i> Add to Favorite</a>
+                        @if (Model.IsInWatchList)
+                        {
+                            <a id="favoriteBtn" href="#" class="parent-btn"><i class="bi bi-heart-fill"></i> Add to Favorite</a>
+                        }
+                        else
+                        {
+                            <a id="favoriteBtn" href="#" class="parent-btn"><i class="bi bi-heart-fill"></i> Remove from favorites</a>
+                        }
                     </div>
                     <div class="movie-rate">
                         <div class="rate">
@@ -125,10 +132,10 @@
                                                     <a href="#media" class="time">All @Model.Videos.Count() Videos & @Model.Images.Count() Photos <i class="ion-ios-arrow-right"></i></a>
                                                 </div>
                                                 <div class="mvsingle-item ov-item">
-                                                @foreach (var image in Model.Images.ToList().Take(4))
-                                                {
-                                                    <a data-fancybox="gallery" href="@image.PhotoUrl"><img data-src="@image.PhotoUrl" alt="" class="img-fluid photo-item lazyload"></a>
-                                                }
+                                                    @foreach (var image in Model.Images.ToList().Take(4))
+                                                    {
+                                                        <a data-fancybox="gallery" href="@image.PhotoUrl"><img data-src="@image.PhotoUrl" alt="" class="img-fluid photo-item lazyload"></a>
+                                                    }
                                                 </div>
                                             }
                                             @if (Model.Actors.Count() != 0)
@@ -190,7 +197,7 @@
                                                 <p>
                                                     @foreach (var actor in Model.Actors.Take(3))
                                                     {
-                                                        <a asp-controller="Actors" asp-action="ById" asp-route-id="@actor.ActorId" >@actor.ActorFullName, </a>
+                                                        <a asp-controller="Actors" asp-action="ById" asp-route-id="@actor.ActorId">@actor.ActorFullName, </a>
                                                     }
                                                     <a asp-controller="Actors" asp-action="ById" asp-route-id="@Model.Actors.ToList()[3].ActorId">@Model.Actors.ToList()[3].ActorFullName</a>
                                                 </p>
@@ -643,7 +650,7 @@
         @if (this.User.Identity.IsAuthenticated)
         {
             <text>
-                                                                                                                                        var value = $(this).attr("data-rating");
+                                  var value = $(this).attr("data-rating");
                         var movieId = @Model.Id;
 
                         let data = { movieId: movieId, value: value };
@@ -670,7 +677,7 @@
                         ratedIndex = Number($(this).data('rating')) - 1;
             </text>
         }
-                                                                                            })
+                                                                })
             });
 
             $('i[data-rating]').mouseover(function() {
@@ -703,4 +710,23 @@
             $('i[data-rating]').removeClass('bi-star-fill').addClass('bi-star');
         }
     </script>
-    }
+ @*   <script>
+        var clicked = false;
+        var button = document.getElementById("favoriteBtn");
+        button.addEventListener("onclick",
+            (e) => {
+                e.preventDefault;
+
+                clicked = true;
+
+                if (clicked) {
+                    button.textContent = "Remove from favorites";
+
+                    clicked = false;
+                }
+                else if (clicked == false) {
+                    button.textContent = "Add to favorites";
+                }
+            });
+    </script>*@
+}
