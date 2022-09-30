@@ -34,20 +34,21 @@
                                 </div>
                             </div>
                         }
-                        <div class="btn-transform transform-vertical">
-                            <div>
-                                <a asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.Id" class="item item-1 yellowbtn">
-                                    <i class="bi bi-pen-fill"></i> Edit
-                                </a>
-                            </div>
-                            <div>
-                                <a asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.Id" class="item item-2 yellowbtn">
-                                    <i class="bi bi-pen-fill"></i>
-                                </a>
-                            </div>
-                        </div>
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
+                            <div class="btn-transform transform-vertical">
+                                <div>
+                                    <a asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.Id" class="item item-1 yellowbtn">
+                                        <i class="bi bi-pen-fill"></i> Edit
+                                    </a>
+                                </div>
+                                <div>
+                                    <a asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.Id" class="item item-2 yellowbtn">
+                                        <i class="bi bi-pen-fill"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        
                             <div class="btn-transform transform-vertical red mt-3">
                                 <form id="deleteForm" asp-controller="Movies" asp-action="Delete" asp-route-id="@Model.Id">
                                     <div>
