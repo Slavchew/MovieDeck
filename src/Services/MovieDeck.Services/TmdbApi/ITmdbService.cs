@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using MovieDeck.Services.Models;
+    using TMDbLib.Objects.Search;
 
     public interface ITmdbService
     {
@@ -16,6 +17,8 @@
         Task<IEnumerable<int>> GetPopularMoviesOriginalIdAsync(int page);
 
         Task<IEnumerable<int>> GetUpcomingMoviesOriginalIdAsync();
+
+        Task<IEnumerable<int>> GetRelatedMoviesIdsByMovieIdAsync(int originalId);
 
         Task<MovieDto> GetMovieById(int id);
 

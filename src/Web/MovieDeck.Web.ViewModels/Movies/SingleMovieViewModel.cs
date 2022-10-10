@@ -47,6 +47,8 @@
 
         public IEnumerable<MovieVideoViewModel> Videos { get; set; }
 
+        public IEnumerable<RelatedMovieViewModel> RelatedMovies { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, SingleMovieViewModel>()

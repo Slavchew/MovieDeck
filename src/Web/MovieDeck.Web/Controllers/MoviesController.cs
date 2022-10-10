@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-using AngleSharp.Io;
+    using AngleSharp.Io;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -12,7 +12,7 @@ using AngleSharp.Io;
 
     using MovieDeck.Common;
     using MovieDeck.Services.Data;
-using MovieDeck.Web.ViewModels;
+    using MovieDeck.Web.ViewModels;
     using MovieDeck.Web.ViewModels.Movies;
 
     public class MoviesController : BaseController
@@ -129,6 +129,8 @@ using MovieDeck.Web.ViewModels;
             // Order Actos in original order based on their role in the movie
             var actorsOriginalOrderIds = await this.moviesService.GetActorsOrignalOrderIdsAsync(model.OriginalId);
             model.Actors = model.Actors.OrderBy(a => actorsOriginalOrderIds.IndexOf(a.ActorOriginalId));
+
+            model.RelatedMovies = await this.moviesService.GetRelatedMovies<RelatedMovieViewModel>(model.OriginalId);
 
             return this.View(model);
         }

@@ -29,6 +29,8 @@
 
         SearchMovieInputModel PopulateSearchInputModelWithGenres(SearchMovieInputModel viewModel);
 
+        Task<IEnumerable<T>> GetRelatedMovies<T>(int originalId);
+
         T PopulateMovieInputModelDropdownCollections<T>(T viewModel)
             where T : MovieInputModelDropdownItems;
 

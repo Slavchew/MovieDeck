@@ -230,11 +230,12 @@
                                         </div>*@
                                         <div class="rv-hd w-100 mb-1">
                                             <div class="div">
+                                                <h3>Reviews</h3>
                                                 <h2 class="mb-1">@Model.Title</h2>
                                             </div>
                                             <a style="margin-right: 15px" href="#" class="redbtn">Write Review</a>
                                         </div>
-                                        <div class="topbar-filter">
+                                        <div class="topbar-filter w-100 mt-4">
                                             <p>Found <span>56 reviews</span> in total</p>
                                             <label>Filter by:</label>
                                             <select>
@@ -385,7 +386,7 @@
 
                                         <p>"Avengers: Age of Ultron" is an entertaining adventure with impressive special effects and cast. The storyline might be better, since most of the characters do not show any chemistry. However, it is worthwhile watching this film since the amazing special effects are not possible to be described in words. Why Pietro has to die is also not possible to be explained. My vote is eight.</p>
                                         </div>*@
-                                        <div class="topbar-filter">
+                                        <div class="topbar-filter w-100">
                                             <label>Reviews per page:</label>
                                             <select>
                                                 <option value="range">5 Reviews</option>
@@ -410,7 +411,6 @@
                                         <div class="row">
                                             <h3 class="w-100">Cast & Crew of</h3>
                                             <h2 class="w-100 mb-1">@Model.Title</h2>
-                                            <!-- //== -->
                                             <div class="title-hd-sm w-100">
                                                 <h4>Directors & Credit Writers</h4>
                                             </div>
@@ -488,9 +488,9 @@
                                 }
                                 <div id="moviesrelated" class="tab">
                                     <div class="row">
-                                        <h3>Related Movies To</h3>
-                                        <h2>Skyfall: Quantum of Spectre</h2>
-                                        <div class="topbar-filter">
+                                        <h3 class="w-100">Related Movies To</h3>
+                                        <h2 class="mb-1">@Model.Title</h2>
+                                        <div class="topbar-filter w-100 mt-4">
                                             <p>Found <span>12 movies</span> in total</p>
                                             <label>Sort by:</label>
                                             <select>
@@ -502,62 +502,22 @@
                                                 <option value="date">Release date Ascending</option>
                                             </select>
                                         </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/mv1.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">oblivion <span>(2012)</span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
-                                                <p class="describe">Earth's mightiest heroes must come together and learn to fight as a team if they are to stop the mischievous Loki and his alien army from enslaving humanity...</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Joss Whedon</a></p>
-                                                <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
+                                        @*One movie card*@
+                                        @foreach (var relatedMovie in this.Model.RelatedMovies)
+                                        {
+                                           <div class="movie-item-style-2">
+                                                <img src="@relatedMovie.PosterUrl" alt="">
+                                                <div class="mv-item-infor">
+                                                    <h6><a asp-controller="Actors" asp-action="ById" asp-route-id="@relatedMovie.Id">@relatedMovie.Title <span>@relatedMovie.ReleaseDate.Value.Year</span></a></h6>
+                                                    <p class="rate"><i class="ion-android-star"></i><span>@relatedMovie.AverageRating</span> / 10</p>
+                                                    <p class="describe">@relatedMovie.PlotShort...</p>
+                                                    <p class="run-time"> Run Time: @relatedMovie.Runtime    .     <span>Release: @relatedMovie.ReleaseDate.Value.ToString("d MMMM yyyy")</span></p>
+                                                    <p>Director: <a href="#">@relatedMovie.Directors.First().DirectorFullName</a></p>
+                                                    <p>Stars: <a href="#">@relatedMovie.Actors.First().ActorFullName,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/mv2.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">into the wild <span>(2014)</span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.8</span> /10</p>
-                                                <p class="describe">As Steve Rogers struggles to embrace his role in the modern world, he teams up with a fellow Avenger and S.H.I.E.L.D agent, Black Widow, to battle a new threat...</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Anthony Russo,</a><a href="#">Joe Russo</a></p>
-                                                <p>Stars: <a href="#">Chris Evans,</a> <a href="#">Samuel L. Jackson,</a> <a href="#">  Scarlett Johansson</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/mv3.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">blade runner  <span>(2015)</span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.3</span> /10</p>
-                                                <p class="describe">Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help...</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Peyton Reed</a></p>
-                                                <p>Stars: <a href="#">Paul Rudd,</a> <a href="#"> Michael Douglas</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/mv4.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">Mulholland pride<span> (2013)  </span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.2</span> /10</p>
-                                                <p class="describe">When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Shane Black</a></p>
-                                                <p>Stars: <a href="#">Robert Downey Jr., </a> <a href="#">  Guy Pearce,</a><a href="#">Don Cheadle</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/mv5.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">skyfall: evil of boss<span> (2013)  </span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.0</span> /10</p>
-                                                <p class="describe">When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Alan Taylor</a></p>
-                                                <p>Stars: <a href="#">Chris Hemsworth,  </a> <a href="#">  Natalie Portman,</a><a href="#">Tom Hiddleston</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="topbar-filter">
+                                        }
+                                        <div class="topbar-filter w-100">
                                             <label>Movies per page:</label>
                                             <select>
                                                 <option value="range">5 Movies</option>

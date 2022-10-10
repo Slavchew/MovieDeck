@@ -16,6 +16,7 @@ using System.Collections.Concurrent;
     using TMDbLib.Objects.Configuration;
     using TMDbLib.Objects.Movies;
     using TMDbLib.Objects.People;
+    using TMDbLib.Objects.Search;
 
     public class TmdbService : ITmdbService
     {
@@ -185,6 +186,17 @@ using System.Collections.Concurrent;
             var upcomingMovies = await this.client.GetMovieUpcomingListAsync();
 
             return upcomingMovies.Results.Select(x => x.Id);
+        }
+
+        public async Task<IEnumerable<int>> GetRelatedMoviesIdsByMovieIdAsync(int originalId)
+        {
+            var relatedMovies = await this.client.GetMovieSimilarAsync(originalId);
+
+            return relatedMovies.Results
+                .Where(x => x.PosterPath != null)
+                .Select(x => x.Id)
+                .Skip(1)
+                .Take(10);
         }
 
         public void GetAll()

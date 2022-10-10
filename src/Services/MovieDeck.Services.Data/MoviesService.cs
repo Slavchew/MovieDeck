@@ -468,6 +468,39 @@ using Newtonsoft.Json.Linq;
             return movieVideos;
         }
 
+        public async Task<IEnumerable<T>> GetRelatedMovies<T>(int originalId)
+        {
+            var relatedMoviesIds = await this.tmdbService.GetRelatedMoviesIdsByMovieIdAsync(originalId);
+
+            var concurrentBag = new ConcurrentBag<int>(relatedMoviesIds);
+
+            await this.ImportMoviesIfNotExistAsync(concurrentBag);
+
+            var relatedMovies = new List<T>();
+
+            foreach (var relatedMovieId in relatedMoviesIds)
+            {
+                if (!this.moviesRepository.AllAsNoTracking().Any(x => x.OriginalId == originalId))
+                {
+                    continue;
+                }
+
+                var movie = await this.moviesRepository.AllAsNoTracking()
+                    .Where(x => x.OriginalId == relatedMovieId)
+                    .To<T>()
+                    .FirstOrDefaultAsync();
+
+                if (movie == null)
+                {
+                    continue;
+                }
+
+                relatedMovies.Add(movie);
+            }
+
+            return relatedMovies;
+        }
+
         public IEnumerable<SelectListItem> GetOrderOptions()
         {
             var options = new List<SelectListItem>()
